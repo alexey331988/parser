@@ -36,13 +36,17 @@ for url in urls:
     soup = BeautifulSoup(html, 'html.parser')
     date = soup.find('span', class_='tm-article-snippet__datetime-published').get('title')
     name = soup.find('a', class_='tm-user-snippet__title').get_text(strip=True)
+    if name:
+        name = soup.find('a', class_='tm-user-snippet__title').get_text(strip=True)
+    else:
+        name = 'Имя не указано'
     nick_name = soup.find('a', class_='tm-user-snippet__nickname').get_text(strip=True)
     name_link = host + soup.find('a', class_='tm-user-snippet__title').get('href')
     title = soup.find('h1', class_='tm-article-snippet__title').get_text(strip=True)
     text = soup.find('div', id='post-content-body').get_text(strip=True)
 
     count += 1
-    print(f'#{count}: {url}: is done')
+    print(f'#{count}: {url}: is done!')
 
 
     urls_data.append((date, name, nick_name, name_link, title, text))
