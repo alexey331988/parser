@@ -34,14 +34,14 @@ for url in urls:
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
 
-    data = soup.find('span', class_='tm-article-snippet__datetime-published').get_text(strip=True)
+    date = soup.find('span', class_='tm-article-snippet__datetime-published').get('title')
     name = soup.find('a', class_='tm-user-snippet__title').get_text(strip=True)
     nick_name = soup.find('a', class_='tm-user-snippet__nickname').get_text(strip=True)
     name_link = host + soup.find('a', class_='tm-user-snippet__title').get('href')
     title = soup.find('h1', class_='tm-article-snippet__title').get_text(strip=True)
     text = soup.find('div', id='post-content-body').get_text(strip=True)
+    urls_data.append((date, name, nick_name, name_link, title, text))
 
-    urls_data.append((data, name, nick_name, name_link, title, text))
 
 urls_urlsdata = [(u, *d) for u, d in zip(urls, urls_data)]
 
