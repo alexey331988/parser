@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
-import os
+# import os
 
 URL = 'https://auto.ria.com/newauto/marka-porsche/'
 HEADERS = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, '
@@ -25,8 +25,8 @@ def get_pages_count(html):
 
 
 
-def get_content(html):
-    soup = BeautifulSoup(html, 'html.parser')
+async def get_content(html):
+    soup = await BeautifulSoup(html, 'html.parser')
     items = soup.find_all('div', class_='proposition')
     cars = []
 
@@ -74,7 +74,7 @@ def parse():
         # get_content(html.text)
         save_file(cars, FILE)
         print(f'Получено {len(cars)} автомобилей')
-        os.startfile(FILE)
+        # os.startfile(FILE)
 
     else:
         print('Error')
