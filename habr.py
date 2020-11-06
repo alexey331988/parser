@@ -17,12 +17,11 @@ HEADERS = {
 response = requests.get(url, headers=HEADERS)
 html = response.text
 soup = BeautifulSoup(html, 'html.parser')
-
 container = soup.find('div', class_='tm-page__main')
-
 article = container.find_all('article', class_='tm-articles-list__item')
 
 urls = []
+
 for a in article:
     url = host + a.find('a', class_='tm-article-snippet__title-link').get('href')
     urls.append(url)
@@ -36,10 +35,12 @@ for url in urls:
     soup = BeautifulSoup(html, 'html.parser')
     date = soup.find('span', class_='tm-article-snippet__datetime-published').get('title')
     name = soup.find('a', class_='tm-user-snippet__title').get_text(strip=True)
+
     if name:
         name = soup.find('a', class_='tm-user-snippet__title').get_text(strip=True)
     else:
         name = 'Имя не указано'
+
     nick_name = soup.find('a', class_='tm-user-snippet__nickname').get_text(strip=True)
     name_link = host + soup.find('a', class_='tm-user-snippet__title').get('href')
     title = soup.find('h1', class_='tm-article-snippet__title').get_text(strip=True)
@@ -69,6 +70,9 @@ try:
                    """)
 except OperationalError:
     var = None
-cursor.executemany("INSERT INTO urls_data VALUES (?,?,?,?,?,?,?)", urls_urlsdata)
+
+cursor.execute(""" CREATE UNIQUE INDEX IF NOT EXISTS url ON urls_data (url)""")
+
+cursor.executemany("INSERT OR IGNORE INTO urls_data VALUES (?,?,?,?,?,?,?)", urls_urlsdata)
 conn.commit()
 conn.close()
