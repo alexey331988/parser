@@ -71,7 +71,7 @@ try:
 except OperationalError:
     var = None
 
-cursor.execute(""" CREATE UNIQUE INDEX IF NOT EXISTS url ON urls_data (url)""")
+cursor.execute("CREATE UNIQUE INDEX IF NOT EXISTS url ON urls_data (url)")
 
 cursor.executemany("INSERT OR IGNORE INTO urls_data VALUES (?,?,?,?,?,?,?)", urls_urlsdata)
 conn.commit()
