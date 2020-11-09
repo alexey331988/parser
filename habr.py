@@ -17,10 +17,10 @@ HEADERS = {
 response = requests.get(url, headers=HEADERS)
 html = response.text
 soup = BeautifulSoup(html, 'html.parser')
-container = soup.find('div', class_='tm-page__main')
-article = container.find_all('article', class_='tm-articles-list__item')
+article = soup.find_all('article', class_='tm-articles-list__item')
 
 urls = []
+
 
 for a in article:
     url = host + a.find('a', class_='tm-article-snippet__title-link').get('href')
