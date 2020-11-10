@@ -17,6 +17,7 @@ HEADERS = {
                   'Chrome/84.0.4147.135 Mobile Safari/537.36 '
 }
 
+
 def get_html(url, params=None):
     r = requests.get(url, headers=HEADERS, params=params)
     return r
